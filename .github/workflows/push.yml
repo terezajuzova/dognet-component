@@ -10,18 +10,22 @@ env:
   DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
 jobs:
-  build:
+  tests:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        phpVersion: [7.4, 8.0, 8.1]
+        symfonyVersion: ["5.4.*", "6.1.*"]
+        exclude:
+          - phpVersion: 7.4
+            symfonyVersion: "6.1.*"
 
     steps:
-      # Tato sekce je odstraněna, pokud nechcete stahovat obsah repozitáře
-      # - name: Check out the repo
-      #   uses: actions/checkout@v2
+      -
+        name: Check out the repo
+        uses: actions/checkout@v3
 
       -
         name: Build image
         run: docker build --build-arg phpversion=${{ matrix.phpVersion }} --build-arg SYMFONY_REQUIRE=${{ matrix.symfonyVersion }} -t $APP_IMAGE .
-
-      -
-        name: Run tests
-        run: docker run ${{env.APP_IMAGE}} composer ci
