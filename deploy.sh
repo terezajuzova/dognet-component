@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 printenv
+docker images
 
 # Obtain the component repository and log in
 docker pull quay.io/keboola/developer-portal-cli-v2:latest
