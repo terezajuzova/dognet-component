@@ -10,26 +10,36 @@ env:
   DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
 jobs:
-  tests:
+  build:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        phpVersion: [7.4, 8.0, 8.1]
-        symfonyVersion: ["5.4.*", "6.1.*"]
-        exclude:
-          - phpVersion: 7.4
-            symfonyVersion: "6.1.*"
-
+    outputs:
+      is_semantic_tag: ${{ steps.tag.outputs.is_semantic_tag }}
     steps:
-      -
-        name: Check out the repo
+      - name: Check out the repo
         uses: actions/checkout@v3
 
-      -
-        name: Build image
-        run: docker build --build-arg phpversion=${{ matrix.phpVersion }} --build-arg SYMFONY_REQUIRE=${{ matrix.symfonyVersion }} -t $APP_IMAGE .
-  
+      - name: Print Docker version
+        run: |
+          docker -v
+
+      - name: Docker login
+        if: env.DOCKERHUB_TOKEN
+        run: docker login --username "$DOCKERHUB_USER" --password "$DOCKERHUB_TOKEN"
+
+      - name: Build image
+        run: docker-compose build ci
+
+      - name: Check image
+        run: docker-compose run --rm ci -m flake8
+
+      - name: Set image tag
+        id: tag
+        run: |
+          TAG="${GITHUB_REF##*/}"
+          IS_SEMANTIC_TAG=$(echo "$TAG" | grep -q '^v\?[0-9]\+\.[0-9]\+\.[0-9]\+$' && echo true || echo false)
+          echo "Tag = '$TAG', is semantic tag = '$IS_SEMANTIC_TAG'"
+          echo "is_semantic_tag=$IS_SEMANTIC_TAG" >> $GITHUB_OUTPUT  
+
   Deploy:
     runs-on: ubuntu-latest
     outputs:
