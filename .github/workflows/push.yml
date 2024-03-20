@@ -44,8 +44,7 @@ jobs:
         run: |
           docker -v
       - name: Build
-        #run: docker build . --tag=component-generator
-        run: docker build --build-arg phpversion=${{ matrix.phpVersion }} --build-arg SYMFONY_REQUIRE=${{ matrix.symfonyVersion }} -t $APP_IMAGE .
+        run: docker build . --tag=$APP_IMAGE
 
       - name: Set image tag
         id: tag
