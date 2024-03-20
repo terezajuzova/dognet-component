@@ -29,6 +29,7 @@ jobs:
       -
         name: Build image
         run: docker build --build-arg phpversion=${{ matrix.phpVersion }} --build-arg SYMFONY_REQUIRE=${{ matrix.symfonyVersion }} -t $APP_IMAGE .
-      -
-        name: Run tests
-        run: docker run ${{env.APP_IMAGE}} composer ci
+    
+      - 
+        name: Deploy
+        run: ./deploy.sh  
