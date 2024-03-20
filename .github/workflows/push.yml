@@ -10,16 +10,8 @@ env:
   DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
 jobs:
-  tests:
+  build:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        phpVersion: [7.4, 8.0, 8.1]
-        symfonyVersion: ["5.4.*", "6.1.*"]
-        exclude:
-          - phpVersion: 7.4
-            symfonyVersion: "6.1.*"
 
     steps:
       -
