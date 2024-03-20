@@ -1,0 +1,32 @@
+{
+    "destination": "my.table",
+    "primary_key": [
+        "id"
+    ],
+    "delimiter": "|",
+    "enclosure": "_",
+    "columns": [
+        "id",
+        "number",
+        "other_column"
+    ],
+    "incremental": true,
+    "metadata": [
+        {
+            "key": "an.arbitrary.key",
+            "value": "Some value"
+        },
+        {
+            "key": "another.arbitrary.key",
+            "value": "A different value"
+        }
+    ],
+    "column_metadata": {
+        "column1": [
+            {
+                "key": "yet.another.key",
+                "value": "Some other value"
+            }
+        ]
+    }
+}

@@ -1,0 +1,1 @@
+{"destination":"destination-table","primary_key":["id","number"],"delimiter":",","enclosure":"\"","columns":[],"incremental":false,"metadata":[],"column_metadata":[]}

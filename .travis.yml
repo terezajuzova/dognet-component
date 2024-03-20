@@ -1,0 +1,53 @@
+sudo: false
+
+language: php
+
+php:
+  - 7.4
+  - 7.3
+  - nightly
+
+env:
+  matrix:
+    - PREFER_LOWEST=""
+    - PREFER_LOWEST="--prefer-lowest --prefer-stable"
+
+matrix:
+  # report before nightly is finished
+  fast_finish: true
+  # nightly can fail
+  allow_failures:
+    - php: nightly
+
+before_script:
+  - composer update $PREFER_LOWEST
+
+script:
+  - composer ci
+
+jobs:
+  include:
+    - stage: docs
+      if: branch = master
+      before_script:
+      - curl -O http://get.sensiolabs.org/sami.phar
+      script:
+      - git fetch origin master:master
+      - git fetch origin --tags
+      - php sami.phar update --force .sami-config.php
+      deploy:
+        provider: pages
+        skip-cleanup: true
+        local-dir: docs
+        github-token:
+          secure: "UBOdXc+jgB6zPe54ASpL5rVPMLvx9Y2dkuTkexLdUcT+8YyMJ7pilJLONABnOIFTt9zTq/kS09FvNsDT00qveHhz2GQrItQuZSptvrBrTAkrIvc8NmJdxBiQkb8HtOSwQjgZz5gd/eXpOwAXFnpkq/uWHArzqiDcQHLP3f91qjALdyGxcU7dX0tZy1CHXiFQmIC5bXkT4XHZt50GcDrdnKkylEzIBDVPGMBLinKdH9ZUr28Q+6rBTHt2M95gnaWBye9G45rKDe88QlDkdIvaM/s7p7l32Rg23faYf5ltkDdW/Blj7w2jHexE9GXDhXdsegK2gjTyKnFYu4wvl3Dyly7mk0DylkTPt9i5xNYIRekdxZ4tuKIJfUCd/ytW0/+rHOrEj8P5vHIoytyh9AC3zzoML8LhDBKHI72nNXrxXm3SqzGMaPln6TIqWdoN8Mj5STDir7OipYz+IjwIFmIlNVMEioo0PsuTrnrz32fdvVH1KEX7iMC5sBodKxopKzpL9XfiSA1vTTyi1PPw88tZ7svQTL9/3XTzqxi9HfsdIGJeH24EMJ3vjYwBKmXHDRKDMe5Wcpiv3bC3lRH/pabZvA7JUvSeBqgGeMyrNXrgvuZ6TUn9NC4OomxoZo/c1ikdsRUA4WEwaJ8EDTfrSbQoAxA0BO6quGqjSXFVG3RUmcI="
+        on:
+          branch: master
+
+stages:
+  - test
+  - docs
+
+cache:
+  directories:
+  - vendor

@@ -1,0 +1,4 @@
+parameters:
+    checkMissingIterableValueType: false
+    ignoreErrors:
+        - '#Argument of an invalid type mixed supplied for foreach, only iterables are supported.#'

@@ -1,0 +1,7 @@
+{
+    "destination": "destination-table",
+    "primary_key": [
+        "id",
+        "number"
+    ]
+}

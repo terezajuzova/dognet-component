@@ -1,0 +1,23 @@
+{
+    "destination": "destination-table",
+    "primary_key": [
+        "id",
+        "number"
+    ],
+    "delimiter": "X",
+    "enclosure": "|",
+    "columns": [
+        "id"
+    ],
+    "incremental": true,
+    "metadata": [
+        {
+            "one": "two"
+        }
+    ],
+    "column_metadata": {
+        "item": {
+            "three": "four"
+        }
+    }
+}

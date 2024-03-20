@@ -1,0 +1,34 @@
+name: GitHub Actions
+on: [ push ]
+concurrency: ci-${{ github.ref }} # to avoid tag collisions in the ECR
+env:
+  # Name of the image in the ECR
+  APP_IMAGE: php-component
+
+  # DockerHub login
+  DOCKERHUB_USER: "keboolabot"
+  DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        phpVersion: [7.4, 8.0, 8.1]
+        symfonyVersion: ["5.4.*", "6.1.*"]
+        exclude:
+          - phpVersion: 7.4
+            symfonyVersion: "6.1.*"
+
+    steps:
+      -
+        name: Check out the repo
+        uses: actions/checkout@v2
+
+      -
+        name: Build image
+        run: docker build --build-arg phpversion=${{ matrix.phpVersion }} --build-arg SYMFONY_REQUIRE=${{ matrix.symfonyVersion }} -t $APP_IMAGE .
+      -
+        name: Run tests
+        run: docker run ${{env.APP_IMAGE}} composer ci

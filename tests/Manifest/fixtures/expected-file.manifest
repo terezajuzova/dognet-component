@@ -1,0 +1,9 @@
+{
+    "is_permanent": false,
+    "is_public": false,
+    "tags": [
+        "sometag"
+    ],
+    "notify": true,
+    "is_encrypted": false
+}
