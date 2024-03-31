@@ -1,15 +1,14 @@
 <?php
 
-//$logger->error('*******Start*********');
-fwrite(STDOUT, '*************Start*******');
-
-/*declare(strict_types=1);
+declare(strict_types=1);
 
 use Keboola\Component\Logger;
 use Keboola\Component\UserException;
 use Keboola\Component\MyComponent;
 
 require __DIR__ . '/../vendor/autoload.php';
+
+fwrite(STDOUT, '*************Start before logger*******');
 
 $logger = new Logger();
 try {
@@ -35,4 +34,4 @@ try {
         ]
     );
     exit(2);
-}*/
+}
