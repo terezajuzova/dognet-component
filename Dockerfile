@@ -26,6 +26,9 @@ RUN composer install $COMPOSER_FLAGS --no-scripts --no-autoloader
 COPY . .
 RUN composer install $COMPOSER_FLAGS
 
+RUN mkdir /data
+COPY config.json /data
+
 #CMD composer ci
 RUN chmod 764 run.sh
 CMD ./run.sh
