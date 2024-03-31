@@ -27,4 +27,5 @@ COPY . .
 RUN composer install $COMPOSER_FLAGS
 
 #CMD composer ci
-CMD echo "Test"
+RUN chmod 764 run.sh
+CMD ./run.sh
