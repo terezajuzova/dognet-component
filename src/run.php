@@ -1,6 +1,9 @@
 <?php
 
-declare(strict_types=1);
+//$logger->error('*******Start*********');
+fwrite(STDOUT, '*************Start*******');
+
+/*declare(strict_types=1);
 
 use Keboola\Component\Logger;
 use Keboola\Component\UserException;
@@ -32,4 +35,4 @@ try {
         ]
     );
     exit(2);
-}
+}*/
