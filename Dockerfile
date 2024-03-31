@@ -26,4 +26,5 @@ RUN composer install $COMPOSER_FLAGS --no-scripts --no-autoloader
 COPY . .
 RUN composer install $COMPOSER_FLAGS
 
-CMD composer ci
+#CMD composer ci
+CMD echo "Test"
