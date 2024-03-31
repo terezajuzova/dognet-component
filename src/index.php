@@ -9,7 +9,8 @@ use Keboola\Component\MyComponent;
 require __DIR__ . '/../vendor/autoload.php';
 
 $logger = new Logger();
-try {
+throw new RuntimeException('src/index');
+/*try {
     $logger->error('*******logger*********');
     fwrite(STDOUT, '*************');
     $app = new MyComponent($logger);
@@ -30,4 +31,4 @@ try {
         ]
     );
     exit(2);
-}
+}*/
