@@ -30,5 +30,8 @@ RUN mkdir /data
 COPY config.json /data
 
 #CMD composer ci
-RUN chmod 764 run.sh
-CMD ./run.sh
+#RUN chmod 764 run.sh
+#CMD ./run.sh
+CMD php src/run.php
+
+
