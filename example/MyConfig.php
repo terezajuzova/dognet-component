@@ -8,9 +8,18 @@ use Keboola\Component\Config\BaseConfig;
 
 class MyConfig extends BaseConfig
 {
-    public function getMaximumAllowedErrorCount(): int
+    public function getApiUrl(): string
     {
-        $defaultValue = 0;
-        return $this->getIntValue(['parameters', 'errorCount', 'maximumAllowed'], $defaultValue);
+        return $this->getStringValue(['api_url']);
+    }
+
+    public function getUsername(): string
+    {
+        return $this->getStringValue(['username']);
+    }
+
+    public function getPassword(): string
+    {
+        return $this->getStringValue(['#password']);
     }
 }

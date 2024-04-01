@@ -15,11 +15,19 @@ class MyConfigDefinition extends BaseConfigDefinition
         $parametersNode
             ->isRequired()
             ->children()
-                ->arrayNode('errorCount')
+                ->scalarNode('api_url')
                     ->isRequired()
-                    ->children()
-                        ->integerNode('maximumAllowed')
-                            ->isRequired();
+                    ->cannotBeEmpty()
+                ->end();
+                //->scalarNode('username')
+                    //->isRequired()
+                    //->cannotBeEmpty()
+                //->end();
+                //->scalarNode('#password')
+                    //->isRequired()
+                    //->cannotBeEmpty()
+                //->end()
+            //->end();
         return $parametersNode;
     }
 }
