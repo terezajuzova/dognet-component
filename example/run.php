@@ -10,8 +10,6 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $logger = new Logger();
 try {
-$logger->error('*******logger*********');
-    fwrite(STDOUT, '*************');
     $app = new Component($logger);
     $app->execute();
     exit(0);
