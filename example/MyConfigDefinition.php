@@ -18,16 +18,14 @@ class MyConfigDefinition extends BaseConfigDefinition
                 ->scalarNode('api_url')
                     ->isRequired()
                     ->cannotBeEmpty()
-                ->end();
-                //->scalarNode('username')
-                    //->isRequired()
-                    //->cannotBeEmpty()
-                //->end();
-                //->scalarNode('#password')
-                    //->isRequired()
-                    //->cannotBeEmpty()
-                //->end()
-            //->end();
+                ->end()
+                ->scalarNode('username')
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                ->end()
+                ->scalarNode('#password')
+                    ->isRequired()
+                    ->cannotBeEmpty();
         return $parametersNode;
     }
 }

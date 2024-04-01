@@ -8,6 +8,7 @@ use Keboola\Component\BaseComponent;
 use Keboola\Component\Manifest\ManifestManager\Options\OutFileManifestOptions;
 use Keboola\Component\Manifest\ManifestManager\Options\OutTableManifestOptions;
 use MyComponent\MyConfig;
+use MyComponent\MyComponentDefinition;
 
 class Component extends BaseComponent
 {
@@ -57,5 +58,9 @@ class Component extends BaseComponent
     protected function getConfigClass(): string
     {
         return MyConfig::class;
+    }
+    protected function getConfigDefinitionClass(): string
+    {
+        return MyConfigDefinition::class;
     }
 }
