@@ -15,13 +15,10 @@ class Component extends BaseComponent
     protected function run(): void
     {
         // get parameters
-        $parameters = $this->getConfig()->getParameters();
+        //$parameters = $this->getConfig()->getParameters();
 
-        // get value of customKey.customSubkey parameter and fail if missing
-        $customParameter = $this->getConfig()->getValue(['parameters', 'customKey', 'customSubkey']);
-
-        // get value with default value if not present
-        $customParameterOrNull = $this->getConfig()->getValue(['parameters', 'customKey'], 'someDefaultValue');
+        $this->getLogger()->info('******* component starts');
+        $this->getLogger()->info('*******' . $this->getConfig()->getStringValue(['api_url']));
 
         // get manifest for input file
         $fileManifest = $this->getManifestManager()->getFileManifest('input-file.csv');
