@@ -12,20 +12,20 @@ class MyConfigDefinition extends BaseConfigDefinition
     protected function getParametersDefinition(): ArrayNodeDefinition
     {
         $parametersNode = parent::getParametersDefinition();
-        $parametersNode
+        $parametersNode /** @phpstan-ignore-line */
             ->isRequired()
             ->children()
                 ->scalarNode('api_url')
                     ->isRequired()
                     ->cannotBeEmpty()
-                ->end();
-                /*->scalarNode('username')
+                ->end()
+                ->scalarNode('username')
                     ->isRequired()
                     ->cannotBeEmpty()
                 ->end()
                 ->scalarNode('#password')
                     ->isRequired()
-                    ->cannotBeEmpty();*/
+                    ->cannotBeEmpty();
         return $parametersNode;
     }
 }
