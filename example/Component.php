@@ -7,6 +7,7 @@ namespace MyComponent;
 use Keboola\Component\BaseComponent;
 use Keboola\Component\Manifest\ManifestManager\Options\OutFileManifestOptions;
 use Keboola\Component\Manifest\ManifestManager\Options\OutTableManifestOptions;
+use MyComponent\MyConfig;
 
 class Component extends BaseComponent
 {
@@ -52,5 +53,9 @@ class Component extends BaseComponent
     protected function getSyncActions(): array
     {
         return ['custom' => 'customSyncAction'];
+    }
+    protected function getConfigClass(): string
+    {
+        return MyConfig::class;
     }
 }
