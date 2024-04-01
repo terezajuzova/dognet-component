@@ -15,10 +15,11 @@ class Component extends BaseComponent
     protected function run(): void
     {
         // get parameters
-        //$parameters = $this->getConfig()->getParameters();
+        $parameters = $this->getConfig()->getParameters();
 
         $this->getLogger()->info('******* component starts');
-        $this->getLogger()->info('*******' . $this->getConfig()->getStringValue(['api_url']));
+        $this->getLogger()->info('*******' . $this->getConfig()->getStringValue(['parameters', 'api_url']));
+        $this->getLogger()->info('******* after logging url');
 
         // get manifest for input file
         $fileManifest = $this->getManifestManager()->getFileManifest('input-file.csv');
