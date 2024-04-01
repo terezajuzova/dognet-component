@@ -32,6 +32,6 @@ COPY config.json /data
 #CMD composer ci
 #RUN chmod 764 run.sh
 #CMD ./run.sh
-CMD composer ci; php src/run.php
+CMD composer ci; php example/run.php
 
 
