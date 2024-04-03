@@ -38,26 +38,13 @@ class Component extends BaseComponent
 
         $this->getLogger()->info('******* Component finished');
     }
-    
-    //Logika bude v run, nikoli v sync akci
-    /*protected function customSyncAction(): array
-    {
-        $this->getLogger()->info('******* custom sync action');
-        $data = [
-            ['id' => 1, 'name' => 'joe'],
-            ['id' => 2, 'name' => 'marry'],
-            ['id' => 3, 'name' => 'peter']
-        ];
 
-        return ['result' => 'success', 'data' => $data];
-    }*/
-
-    /** @return array<string,string> */
-    protected function getSyncActions(): array
+    ///** @return array<string,string> */
+   /* protected function getSyncActions(): array
     {
         $this->getLogger()->info('******* get sync actions');
         return ['custom' => 'customSyncAction'];
-    }
+    }*/
     protected function getConfigClass(): string
     {
         return MyConfig::class;
