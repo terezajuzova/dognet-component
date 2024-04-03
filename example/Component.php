@@ -46,7 +46,7 @@ class Component extends BaseComponent
     protected function getSyncActions(): array
     {
         $this->getLogger()->info('******* get sync actions');
-        return ['custom' => 'customSyncAction'];
+        return ['run' => 'customSyncAction'];
     }
     protected function getConfigClass(): string
     {
