@@ -27,12 +27,11 @@ class Component extends BaseComponent
                 ->setDestination('out.my-dognet-data-source.data')
         );
 
-        $dataDir = getenv('KBC_DATADIR') === false ? '/data/' : (string) getenv('KBC_DATADIR');
-        $outputPath = $dataDir . '/out/tables/' . 'data.csv';
+        $outputPath = $this->getDataDir() . '/out/tables/data.csv';
 
         $this->getLogger()->info('******* Going to write ouput to: ' . $outputPath);
 
-        $fp = fopen($outputPath, 'w') or die("Unable to open file!");
+        $fp = fopen($outputPath, 'w') or die("Unable to open output file $outputPath for writing!");
         fwrite($fp, "id,name\n1,joe");
         fclose($fp);
 
