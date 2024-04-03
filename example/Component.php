@@ -21,12 +21,6 @@ class Component extends BaseComponent
         $this->getLogger()->info('*******' . $this->getConfig()->getStringValue(['parameters', 'api_url']));
         $this->getLogger()->info('******* after logging url');
 
-        // get manifest for input file
-        $fileManifest = $this->getManifestManager()->getFileManifest('input-file.csv');
-
-        // get manifest for input table
-        $tableManifest = $this->getManifestManager()->getTableManifest('in.tableName');
-
         // write manifest for output file
         $this->getManifestManager()->writeFileManifest(
             'out-file.csv',
@@ -45,7 +39,14 @@ class Component extends BaseComponent
 
     protected function customSyncAction(): array
     {
-        return ['result' => 'success', 'data' => ['joe', 'marry']];
+
+        $data = [
+            ['id' => 1, 'name' => 'joe'],
+            ['id' => 2, 'name' => 'marry'],
+            ['id' => 3, 'name' => 'peter']
+        ];
+
+        return ['result' => 'success', 'data' => $data];
     }
 
     /** @return array<string,string> */
