@@ -33,7 +33,8 @@ class Component extends BaseComponent
             new OutFileManifestOptions()
         );
 
-        $outputPath = $this->getDataDir() . '/out/tables/data.csv';
+        //$outputPath = $this->getDataDir() . '/out/tables/data.csv';
+        $outputPath = $this->getDataDir() . '/out/files/data.csv';
 
         $this->getLogger()->info('******* Going to write ouput to: ' . $outputPath);
 
