@@ -26,13 +26,13 @@ class Component extends BaseComponent
             'data.csv',
             (new OutTableManifestOptions())
                 ->setPrimaryKeyColumns(['id'])
-                ->setDestination('out.report')
+                ->setDestination('out.my-dognet-data-source.data')
         );
     }
 
     protected function customSyncAction(): array
     {
-
+        $this->getLogger()->info('******* custom sync action');
         $data = [
             ['id' => 1, 'name' => 'joe'],
             ['id' => 2, 'name' => 'marry'],
@@ -45,6 +45,7 @@ class Component extends BaseComponent
     /** @return array<string,string> */
     protected function getSyncActions(): array
     {
+        $this->getLogger()->info('******* get sync actions');
         return ['custom' => 'customSyncAction'];
     }
     protected function getConfigClass(): string
