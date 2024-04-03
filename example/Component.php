@@ -33,7 +33,7 @@ class Component extends BaseComponent
         $this->getLogger()->info('******* Going to write ouput to: ' . $outputPath);
 
         $fp = fopen($outputPath, 'w') or die("Unable to open file!");
-        fwrite($fp, "id;name\n1;joe");
+        fwrite($fp, "id,name\n1,joe");
         fclose($fp);
 
         $this->getLogger()->info('******* Component finished');
