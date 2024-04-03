@@ -20,21 +20,12 @@ class Component extends BaseComponent
         $this->getLogger()->info('******* after logging url');
 
         // write manifest for output table
-       /*$this->getManifestManager()->writeTableManifest(
+       $this->getManifestManager()->writeTableManifest(
             'data.csv',
-            (new OutTableManifestOptions())
-                ->setPrimaryKeyColumns(['id'])
-                ->setDestination('out.my-dognet-data-source.data')
-        );*/
-
-        // write manifest for output file
-        $this->getManifestManager()->writeFileManifest(
-            'data.csv',
-            new OutFileManifestOptions()
+            new OutTableManifestOptions()
         );
 
-        //$outputPath = $this->getDataDir() . '/out/tables/data.csv';
-        $outputPath = $this->getDataDir() . '/out/files/data.csv';
+        $outputPath = $this->getDataDir() . '/out/tables/data.csv';
 
         $this->getLogger()->info('******* Going to write ouput to: ' . $outputPath);
 
