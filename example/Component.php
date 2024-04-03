@@ -14,23 +14,33 @@ class Component extends BaseComponent
 {
     protected function run(): void
     {
-        // get parameters
-        $parameters = $this->getConfig()->getParameters();
 
         $this->getLogger()->info('******* component starts');
         $this->getLogger()->info('*******' . $this->getConfig()->getStringValue(['parameters', 'api_url']));
         $this->getLogger()->info('******* after logging url');
 
         // write manifest for output table
-        $this->getManifestManager()->writeTableManifest(
+       $this->getManifestManager()->writeTableManifest(
             'data.csv',
             (new OutTableManifestOptions())
                 ->setPrimaryKeyColumns(['id'])
                 ->setDestination('out.my-dognet-data-source.data')
         );
-    }
 
-    protected function customSyncAction(): array
+        $dataDir = getenv('KBC_DATADIR') === false ? '/data/' : (string) getenv('KBC_DATADIR');
+        $outputPath = $dataDir . '/out/tables/' . 'data.csv';
+
+        $this->getLogger()->info('******* Going to write ouput to: ' . $outputPath);
+
+        $fp = fopen($outputPath, 'w') or die("Unable to open file!");
+        fwrite($fp, 'id;name\n1;joe');
+        fclose($fp);
+
+        $this->getLogger()->info('******* Component finished');
+    }
+    
+    //Logika bude v run, nikoli v sync akci
+    /*protected function customSyncAction(): array
     {
         $this->getLogger()->info('******* custom sync action');
         $data = [
@@ -40,13 +50,13 @@ class Component extends BaseComponent
         ];
 
         return ['result' => 'success', 'data' => $data];
-    }
+    }*/
 
     /** @return array<string,string> */
     protected function getSyncActions(): array
     {
         $this->getLogger()->info('******* get sync actions');
-        return ['run' => 'customSyncAction'];
+        return ['custom' => 'customSyncAction'];
     }
     protected function getConfigClass(): string
     {
