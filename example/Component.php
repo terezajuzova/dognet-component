@@ -21,13 +21,6 @@ class Component extends BaseComponent
         $this->getLogger()->info('*******' . $this->getConfig()->getStringValue(['parameters', 'api_url']));
         $this->getLogger()->info('******* after logging url');
 
-        // write manifest for output file
-        $this->getManifestManager()->writeFileManifest(
-            'out-file.csv',
-            (new OutFileManifestOptions())
-                ->setTags(['tag1', 'tag2'])
-        );
-
         // write manifest for output table
         $this->getManifestManager()->writeTableManifest(
             'data.csv',
