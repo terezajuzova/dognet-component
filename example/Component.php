@@ -33,7 +33,9 @@ class Component extends BaseComponent
         // login (as merchant)
 
         $this->getLogger()->info("Opening Pap API session");
+        $this->getLogger()->error("error test******");
         $session = new Pap_Api_Session($this->getConfig()->getStringValue(['parameters', 'api_url']));
+        $this->getLogger()->info("test******");
         $this->getLogger()->error("test******");
         if(!$session->login($this->getConfig()->getStringValue(['parameters', 'username']), $this->getConfig()->getStringValue(['parameters', '#password']))) {
             $this->getLogger()->error("Cannot login. Message: ".$session->getMessage());
