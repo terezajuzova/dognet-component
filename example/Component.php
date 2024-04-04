@@ -7,6 +7,11 @@ namespace MyComponent;
 use Keboola\Component\BaseComponent;
 use Keboola\Component\Manifest\ManifestManager\Options\OutFileManifestOptions;
 use Keboola\Component\Manifest\ManifestManager\Options\OutTableManifestOptions;
+use MyComponent\Pap_Api_Session;
+use MyComponent\Pap_Api_AffiliatesGrid;
+use MyComponent\Pap_Api_TransactionsGrid;
+use MyComponent\Gpf_Data_Filter;
+use MyComponent\Gpf_Rpc_Array;
 //use MyComponent\MyConfig;
 //use MyComponent\MyComponentDefinition;
 
@@ -40,20 +45,14 @@ class Component extends BaseComponent
         $this->getLogger()->info("username: $username");
         $this->getLogger()->info("password: " . (($password === '' || $password === null) ? "Missing in config" : "Defined"));
 
-        $this->getLogger()->info("Opening Pap API session");
-
         foreach (get_declared_classes() as $definedClass) {
             $this->getLogger()->info($definedClass);
         }
 
-        try {
-            $session = new Pap_Api_Session($apiUrl);
-        } catch(Exception $e) {
-            $this->getLogger()->info("Pap_Api_Session instantiation error: ".$e->getMessage());
-        }
 
+        $this->getLogger()->info("Opening Pap API session");
+        
         $session = new Pap_Api_Session($apiUrl);
-
         if(!$session->login($username, $password)) {
             $this->getLogger()->error("Cannot login. Message: ".$session->getMessage());
             die("Cannot login. Message: ".$session->getMessage());
