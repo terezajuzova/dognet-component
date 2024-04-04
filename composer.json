@@ -44,7 +44,7 @@
     },
     "scripts": {
         "tests": "phpunit",
-        "phpstan": "phpstan analyse --no-progress --level=max src tests example -c phpstan.neon",
+        "phpstan": "phpstan analyse --no-progress --level=max src tests -c phpstan.neon",
         "phpcs": "phpcs --extensions=php src tests example",
         "phpcbf": "phpcbf --extensions=php src tests example",
         "build": [
