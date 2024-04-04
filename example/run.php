@@ -14,9 +14,12 @@ try {
     $app->execute();
     exit(0);
 } catch (UserException $e) {
+    $logger->info("UserException in run.php: ". $e->getMessage());
     $logger->error($e->getMessage());
     exit(1);
 } catch (Throwable $e) {
+    $logger->info("Throwable in run.php: ". $e->getMessage());
+
     $logger->critical(
         get_class($e) . ':' . $e->getMessage(),
         [
@@ -28,4 +31,6 @@ try {
         ]
     );
     exit(2);
+} finally {
+    $logger->info("Finnaly block in run.php");
 }
