@@ -42,8 +42,8 @@ class Component extends BaseComponent
 
         $this->getLogger()->info("Opening Pap API session");
 
-        if (class_exists('MyComponent\Pap_Api_Session', false)) {
-            $this->getLogger()->info("Pap_Api_Session class exists");
+        foreach (get_declared_classes() as $definedClass) {
+            $this->getLogger()->info($definedClass);
         }
 
         try {
