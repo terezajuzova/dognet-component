@@ -35,6 +35,7 @@ class Component extends BaseComponent
         $this->getLogger()->info("Opening Pap API session");
         $session = new Pap_Api_Session($this->getConfig()->getStringValue(['parameters', 'api_url']));
         if(!$session->login($this->getConfig()->getStringValue(['parameters', 'username']), $this->getConfig()->getStringValue(['parameters', '#password']))) {
+            $this->getLogger()->error("Cannot login. Message: ".$session->getMessage());
             die("Cannot login. Message: ".$session->getMessage());
         }
 
@@ -48,6 +49,7 @@ class Component extends BaseComponent
         try {
             $request->sendNow();
         } catch(Exception $e) {
+            $this->getLogger()->error("API call error: ".$e->getMessage());
             die("API call error: ".$e->getMessage());
         }
         $this->getLogger()->info("Retrieved list of affiliates");
@@ -66,6 +68,7 @@ class Component extends BaseComponent
         try {
             $request->sendNow();
         } catch(Exception $e) {
+            $this->getLogger()->error("API call error: ".$e->getMessage());
             die("API call error: ".$e->getMessage());
         }
         $this->getLogger()->info("Retrieved list of transactions");
