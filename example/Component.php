@@ -40,7 +40,7 @@ class Component extends BaseComponent
         
         $this->getLogger()->info("apiUrl: $apiUrl");
         $this->getLogger()->info("username: $username");
-        $this->getLogger()->info("password: " . ($password === '' || $password === null) ? "Missing in config" : "Defined");
+        $this->getLogger()->info("password: " . (($password === '' || $password === null) ? "Missing in config" : "Defined"));
 
         $this->getLogger()->info("Opening Pap API session");
         $session = new Pap_Api_Session($apiUrl);
