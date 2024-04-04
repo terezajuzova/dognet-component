@@ -42,11 +42,18 @@ class Component extends BaseComponent
 
         $this->getLogger()->info("Opening Pap API session");
 
-        if (class_exists('Pap_Api_Session', false)) {
-            $this->getLogger()->info("Pap_Api_Session class exists");
+        if (class_exists('Gpf_Api_Session', false)) {
+            $this->getLogger()->info("Gpf_Api_Session class exists");
+        }
+
+        try {
+            $session = new Pap_Api_Session($apiUrl);
+        } catch(Exception $e) {
+            $this->getLogger()->info("Pap_Api_Session instantiation error: ".$e->getMessage());
         }
 
         $session = new Pap_Api_Session($apiUrl);
+
         if(!$session->login($username, $password)) {
             $this->getLogger()->error("Cannot login. Message: ".$session->getMessage());
             die("Cannot login. Message: ".$session->getMessage());
