@@ -10,6 +10,8 @@ use Keboola\Component\Manifest\ManifestManager\Options\OutTableManifestOptions;
 use MyComponent\MyConfig;
 use MyComponent\MyComponentDefinition;
 
+include '/code/PapApi/PapApi.class.php';
+
 class Component extends BaseComponent
 {
     protected function run(): void
