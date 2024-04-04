@@ -3821,7 +3821,9 @@ if (!class_exists('Gpf_Api_Session', false)) {
   	private $roleType = '';
   
   	public function __construct($url) {
+        fwrite(STDOUT, "Gpf_Api_Session constructor start");
   		$this->url = $url;
+        fwrite(STDOUT, "Gpf_Api_Session constructor end");
   	}
   	/**
   	 *

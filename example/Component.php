@@ -35,14 +35,17 @@ class Component extends BaseComponent
         $apiUrl = $this->getConfig()->getStringValue(['parameters', 'api_url']);
         $username = $this->getConfig()->getStringValue(['parameters', 'username']);
         $password = $this->getConfig()->getStringValue(['parameters', '#password']);
-
-        $this->getLogger()->critical("***** critical test");
         
         $this->getLogger()->info("apiUrl: $apiUrl");
         $this->getLogger()->info("username: $username");
         $this->getLogger()->info("password: " . (($password === '' || $password === null) ? "Missing in config" : "Defined"));
 
         $this->getLogger()->info("Opening Pap API session");
+
+        if (class_exists('Pap_Api_Session', false)) {
+            $this->getLogger()->info("Pap_Api_Session class exists");
+        }
+
         $session = new Pap_Api_Session($apiUrl);
         if(!$session->login($username, $password)) {
             $this->getLogger()->error("Cannot login. Message: ".$session->getMessage());
