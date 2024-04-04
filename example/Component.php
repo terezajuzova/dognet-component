@@ -7,8 +7,8 @@ namespace MyComponent;
 use Keboola\Component\BaseComponent;
 use Keboola\Component\Manifest\ManifestManager\Options\OutFileManifestOptions;
 use Keboola\Component\Manifest\ManifestManager\Options\OutTableManifestOptions;
-//use MyComponent\MyConfig;
-//use MyComponent\MyComponentDefinition;
+use MyComponent\MyConfig;
+use MyComponent\MyComponentDefinition;
 
 require '/code/PapApi/PapApi.class.php';
 

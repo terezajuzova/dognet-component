@@ -14,6 +14,7 @@
  *   
  */
 
+ namespace MyComponent;
 
 define('PAP_API_VERSION', '1.0.0.4');
 
