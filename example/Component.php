@@ -17,27 +17,28 @@ class Component extends BaseComponent
     protected function run(): void
     {
 
-        $this->getLogger()->info('******* component starts');
-        $this->getLogger()->info('*******' . $this->getConfig()->getStringValue(['parameters', 'api_url']));
-        $this->getLogger()->info('******* after logging url');
-
-        // write manifest for output table
+        $this->getLogger()->info('Componet starting');
+        
+       // write manifest for output table
        $this->getManifestManager()->writeTableManifest(
             'data.csv',
             new OutTableManifestOptions()
         );
 
-        $outputPath = $this->getDataDir() . '/out/tables/data.csv';
+        $this->getLogger()->info("Written table manifest");        
 
         // Pap API code
 
         //----------------------------------------------
         // login (as merchant)
 
+        $this->getLogger()->info("Opening Pap API session");
         $session = new Pap_Api_Session($this->getConfig()->getStringValue(['parameters', 'api_url']));
         if(!$session->login($this->getConfig()->getStringValue(['parameters', 'username']), $this->getConfig()->getStringValue(['parameters', '#password']))) {
             die("Cannot login. Message: ".$session->getMessage());
         }
+
+        $this->getLogger()->info("Session opened");
 
         //----------------------------------------------
         // get recordset with list of affiliates
@@ -49,6 +50,7 @@ class Component extends BaseComponent
         } catch(Exception $e) {
             die("API call error: ".$e->getMessage());
         }
+        $this->getLogger()->info("Retrieved list of affiliates");
 
         $grid = $request->getGrid();
 
@@ -66,6 +68,7 @@ class Component extends BaseComponent
         } catch(Exception $e) {
             die("API call error: ".$e->getMessage());
         }
+        $this->getLogger()->info("Retrieved list of transactions");
 
         $grid = $request->getGrid();
         $recordset = $grid->getRecordset();
@@ -85,6 +88,10 @@ class Component extends BaseComponent
                 $this->getLogger()->info('Transaction OrderID: '.$rec->get('orderid'). ', Commission: '.$rec->get('commission').'<br>');
             }
         }
+
+        $outputPath = $this->getDataDir() . '/out/tables/data.csv';
+
+        $this->getLogger()->info("Going to write ouput to $outputPath");
 
         // Otevřít soubor pro zápis
         $file = fopen($outputPath, 'w') or die("Unable to open output file $outputPath for writing!");
@@ -112,7 +119,7 @@ class Component extends BaseComponent
         // Zavřít soubor
         fclose($file);
 
-        $this->getLogger()->info("Výstup byl uložen do souboru output.csv");
+        $this->getLogger()->info("Component finished");
 
 
         //$fp = fopen($outputPath, 'w') or die("Unable to open output file $outputPath for writing!");
