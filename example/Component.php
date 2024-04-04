@@ -34,6 +34,7 @@ class Component extends BaseComponent
 
         $this->getLogger()->info("Opening Pap API session");
         $session = new Pap_Api_Session($this->getConfig()->getStringValue(['parameters', 'api_url']));
+        $this->getLogger()->error("test******");
         if(!$session->login($this->getConfig()->getStringValue(['parameters', 'username']), $this->getConfig()->getStringValue(['parameters', '#password']))) {
             $this->getLogger()->error("Cannot login. Message: ".$session->getMessage());
             die("Cannot login. Message: ".$session->getMessage());
