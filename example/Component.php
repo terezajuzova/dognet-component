@@ -49,6 +49,11 @@ class Component extends BaseComponent
             $this->getLogger()->info($definedClass);
         }
 
+        $this->getLogger()->info("**************************"); 
+
+        foreach (get_declared_interfaces() as $definedInterface) {
+            $this->getLogger()->info($definedInterface);
+        }
 
         $this->getLogger()->info("Opening Pap API session");
         
