@@ -14,6 +14,13 @@
  *   
  */
 
+ namespace MyComponent;
+
+ use \IteratorAggregate;
+ use \ArrayIterator;
+ use \Exception;
+ use \Iterator;
+
 define('PAP_API_VERSION', '1.0.0.4');
 
 if (!class_exists('Gpf', false)) {

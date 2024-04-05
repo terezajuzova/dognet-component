@@ -8,8 +8,6 @@ use Keboola\Component\BaseComponent;
 use Keboola\Component\Manifest\ManifestManager\Options\OutFileManifestOptions;
 use Keboola\Component\Manifest\ManifestManager\Options\OutTableManifestOptions;
 
-use \IteratorAggregate;
-
 use MyComponent\Gpf;
 use MyComponent\Gpf_Object;
 use MyComponent\Gpf_Rpc_Serializable;
