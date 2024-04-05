@@ -14,7 +14,7 @@
  *   
  */
 
- namespace MyComponent;
+namespace MyComponent;
 
  use \IteratorAggregate;
  use \ArrayIterator;
@@ -3828,9 +3828,7 @@ if (!class_exists('Gpf_Api_Session', false)) {
   	private $roleType = '';
   
   	public function __construct($url) {
-        fwrite(STDOUT, "Gpf_Api_Session constructor start");
   		$this->url = $url;
-        fwrite(STDOUT, "Gpf_Api_Session constructor end");
   	}
   	/**
   	 *
@@ -7061,7 +7059,6 @@ if (!class_exists('Pap_Api_PayoutsHistoryGrid', false)) {
 } //end Pap_Api_PayoutsHistoryGrid
 
 if (!class_exists('Pap_Api_Session', false)) {
-  fwrite(STDOUT, "Defining class Pap_Api_Session");
   class Pap_Api_Session extends Gpf_Api_Session {
   
       const AUTHENTICATE_CLASS_NAME = 'Pap_Api_AuthService';

@@ -22,7 +22,7 @@
     "autoload-dev": {
         "psr-4": {
             "Keboola\\Component\\Tests\\": "tests/",
-            "MyComponent\\": "example/"
+            "MyComponent\\": "dognet/"
         }
     },
     "require": {
@@ -44,9 +44,9 @@
     },
     "scripts": {
         "tests": "phpunit",
-        "phpstan": "phpstan analyse --no-progress --level=max src tests -c phpstan.neon",
-        "phpcs": "phpcs --extensions=php src tests example",
-        "phpcbf": "phpcbf --extensions=php src tests example",
+        "phpstan": "phpstan analyse --no-progress --level=max -c phpstan.neon",
+        "phpcs": "phpcs --extensions=php src tests dognet",
+        "phpcbf": "phpcbf --extensions=php src tests dognet",
         "build": [
             "@phplint",
             "@phpcs",

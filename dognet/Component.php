@@ -76,12 +76,7 @@ use MyComponent\Pap_Api_PayoutsHistoryGrid;
 use MyComponent\Pap_Api_Session;
 use MyComponent\Gpf_Net_Http_Client;
 
-//use MyComponent\MyConfig;
-//use MyComponent\MyComponentDefinition;
-
 require 'PapApi.class.php';
-
-
 
 class Component extends BaseComponent
 {
@@ -109,23 +104,13 @@ class Component extends BaseComponent
         
         $this->getLogger()->info("apiUrl: $apiUrl");
         $this->getLogger()->info("username: $username");
-        $this->getLogger()->info("password: " . (($password === '' || $password === null) ? "Missing in config" : "Defined"));
-
-        foreach (get_declared_classes() as $definedClass) {
-            $this->getLogger()->info($definedClass);
-        }
-
-        $this->getLogger()->info("**************************"); 
-
-        foreach (get_declared_interfaces() as $definedInterface) {
-            $this->getLogger()->info($definedInterface);
-        }
+        $this->getLogger()->info("password: " . ((strlen($password) == 0) ? "Missing in config" : "Defined"));
 
         $this->getLogger()->info("Opening Pap API session");
         
         $session = new Pap_Api_Session($apiUrl);
         if(!$session->login($username, $password)) {
-            $this->getLogger()->error("Cannot login. Message: ".$session->getMessage());
+            $this->getLogger()->info("Cannot login. Message: ".$session->getMessage());
             die("Cannot login. Message: ".$session->getMessage());
         }
 
@@ -139,7 +124,7 @@ class Component extends BaseComponent
         try {
             $request->sendNow();
         } catch(Exception $e) {
-            $this->getLogger()->error("API call error: ".$e->getMessage());
+            $this->getLogger()->info("API call error: ".$e->getMessage());
             die("API call error: ".$e->getMessage());
         }
         $this->getLogger()->info("Retrieved list of affiliates");
@@ -158,78 +143,62 @@ class Component extends BaseComponent
         try {
             $request->sendNow();
         } catch(Exception $e) {
-            $this->getLogger()->error("API call error: ".$e->getMessage());
+            $this->getLogger()->info("API call error: ".$e->getMessage());
             die("API call error: ".$e->getMessage());
         }
         $this->getLogger()->info("Retrieved list of transactions");
 
-        $grid = $request->getGrid();
-        $recordset = $grid->getRecordset();
-
-        // iterate through the records
-        foreach($recordset as $rec) {
-            $this->getLogger()->info('order_id: '.$rec->get('orderid').', commission: '.$rec->get('commission').', id'.$rec->get('id').', date_inserted: '.$rec->get('dateinserted').', s_timestamp: '. date('Y-m-d H:i:s').'<br>');
-        }
+        $recordset = $request->getGrid()->getRecordset();
 
         //The first grid request returns only a limited number of records, depends on setLimit() function. If you want to retrieve all records, see using the cycle in the code below:
 
         while ($recordset->getSize() == $request->getLimit()) {
             $request->sendNow();
-            $recordset = $request->getGrid()->getRecordset();
-            // iterate through the records
-            foreach($recordset as $rec) {
-                $this->getLogger()->info('Transaction OrderID: '.$rec->get('orderid'). ', Commission: '.$rec->get('commission').'<br>');
-            }
+            $recordset = array_merge($recordset, $request->getGrid()->getRecordset());
         }
 
         $outputPath = $this->getDataDir() . '/out/tables/data.csv';
 
         $this->getLogger()->info("Going to write ouput to $outputPath");
 
-        // Otevřít soubor pro zápis
-        $file = fopen($outputPath, 'w') or die("Unable to open output file $outputPath for writing!");
+        $file = null;
+        try {
+            $file = fopen($outputPath, 'w') or die("Unable to open output file $outputPath for writing!");
 
-        // Hlavičky CSV souboru
-        fputcsv($file, array('order_id', 'commission', 'id', 'date_inserted', 's_timestamp'));
+            // Write csv header
+            fputcsv($file, array('order_id', 'commission', 'id', 'date_inserted', 's_timestamp'));
 
-        // Iterate through the records and write them to CSV
-        foreach ($recordset as $rec) {
-            $data = array(
-                $rec->get('orderid'),
-                $rec->get('commission'),
-                $rec->get('id'),
-                $rec->get('dateinserted'),
-                date('Y-m-d H:i:s')
-            );
+            // Iterate through the records and write them to CSV
+            foreach ($recordset as $rec) {
+                $data = array(
+                    $rec->get('orderid'),
+                    $rec->get('commission'),
+                    $rec->get('id'),
+                    $rec->get('dateinserted'),
+                    date('Y-m-d H:i:s')
+                );
 
-            // Write data to CSV
-            fputcsv($file, $data);
-
-            // Výpis obsahu každého řádku
-            $this->getLogger()->info('Zapsán řádek do CSV: ' . implode(',', $data) . '<br>');
+                // Write data to CSV
+                fputcsv($file, $data);
+            }
+        } catch (Exception $e) {
+            $this->getLogger()->info("Failed to write the output file: " . $e->getMessage());
+            die("Failed to write the output file: " . $e->getMessage());
+        } finally {
+            if (!is_null($file)) {
+                fclose($file);
+                $this->getLogger()->info("Closed the output file $outputPath");
+            }
         }
 
-        // Zavřít soubor
-        fclose($file);
-
         $this->getLogger()->info("Component finished");
-
-
-        //$fp = fopen($outputPath, 'w') or die("Unable to open output file $outputPath for writing!");
-        //fwrite($fp, "id,name\n1,joe");
-        //fclose($fp);
     }
 
-    ///** @return array<string,string> */
-   /* protected function getSyncActions(): array
-    {
-        $this->getLogger()->info('******* get sync actions');
-        return ['custom' => 'customSyncAction'];
-    }*/
     protected function getConfigClass(): string
     {
         return MyConfig::class;
     }
+
     protected function getConfigDefinitionClass(): string
     {
         return MyConfigDefinition::class;
