@@ -135,7 +135,8 @@ class Component extends BaseComponent
         // get recordset of list of transactions
         $request = new Pap_Api_TransactionsGrid($session);
 
-        $request->addFilter('dateinserted', Gpf_Data_Filter::DATERANGE_IS, Gpf_Data_Filter::RANGE_THIS_YEAR);
+        //$request->addFilter('dateinserted', Gpf_Data_Filter::DATERANGE_IS, Gpf_Data_Filter::RANGE_THIS_YEAR);
+        $request->addFilter("dateinserted", Gpf_Data_Filter::DATE_LOWER, "2050-01-01");
         $request->addParam('columns', new Gpf_Rpc_Array(array(array('id'),array('transid'),array('campaignid'), array('orderid'), array('commission'), array('original_currency_code'), array('dateinserted'),  array('userid'))));
         $request->setLimit(0, 100);
         $request->setSorting('orderid', false);
