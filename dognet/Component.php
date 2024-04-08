@@ -166,7 +166,7 @@ class Component extends BaseComponent
         
         if ($maxRecords > 0) {
             $cycles = ceil($totalRecords / $maxRecords);
-            for ($i = 1; $i <= $cycles; $i++) {
+            for ($i = 1; $i < $cycles; $i++) {
                 // Nastavení limitu pro dotaz
                 $request->setLimit(($i - 1) * $maxRecords, $maxRecords);
                 $request->sendNow();
