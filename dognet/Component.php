@@ -153,12 +153,22 @@ class Component extends BaseComponent
 
         //The first grid request returns only a limited number of records, depends on setLimit() function. If you want to retrieve all records, see using the cycle in the code below:
 
-        while ($recordset->getSize() == $request->getLimit()) {
+        /*while ($recordset->getSize() == $request->getLimit()) {
             $request->sendNow();
-            //$recordset = array_merge($recordset, $request->getGrid()->getRecordset());
-            $newRecordset = $request->getGrid()->getRecordset();
-            $newRecordsArray = iterator_to_array($newRecordset);
-            $recordset = empty($recordset) ? $newRecordsArray : array_merge($recordset, $newRecordsArray);
+            $recordset = array_merge($recordset, $request->getGrid()->getRecordset());
+        }*/
+
+        $totalRecords = $grid->getTotalCount();
+        $maxRecords = $recordset->getSize();
+
+        if ($maxRecords > 0) {
+            $cycles = ceil($totalRecords / $maxRecords);
+            for($i=1; $i<=$cycles; $i++) {
+                // now get next 100 records
+                $request->setLimit($i * $maxRecords, $maxRecords);
+                $request->sendNow();
+                $recordset = $request->getGrid()->getRecordset();
+            }
         }
 
         $outputPath = $this->getDataDir() . '/out/tables/data.csv';
