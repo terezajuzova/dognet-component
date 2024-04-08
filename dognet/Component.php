@@ -160,14 +160,24 @@ class Component extends BaseComponent
 
         $totalRecords = $grid->getTotalCount();
         $maxRecords = $recordset->getSize();
-
+        
+        // Inicializace pole pro ukládání záznamů
+        $allRecords = [];
+        
         if ($maxRecords > 0) {
             $cycles = ceil($totalRecords / $maxRecords);
-            for($i=1; $i<=$cycles; $i++) {
-                // now get next 100 records
-                $request->setLimit($i * $maxRecords, $maxRecords);
+            for ($i = 1; $i <= $cycles; $i++) {
+                // Nastavení limitu pro dotaz
+                $request->setLimit(($i - 1) * $maxRecords, $maxRecords);
                 $request->sendNow();
-                $recordset = $request->getGrid()->getRecordset();
+                
+                // Získání záznamů z odpovědi
+                $currentRecordset = $request->getGrid()->getRecordset();
+                
+                // Přidání načtených záznamů do pole
+                foreach ($currentRecordset as $record) {
+                    $allRecords[] = $record;
+                }
             }
         }
 
@@ -183,7 +193,7 @@ class Component extends BaseComponent
             fputcsv($file, array('order_id', 'commission', 'id', 'date_inserted', 's_timestamp'));
 
             // Iterate through the records and write them to CSV
-            foreach ($recordset as $rec) {
+            foreach ($allRecords as $rec) {
                 $data = array(
                     $rec->get('orderid'),
                     $rec->get('commission'),
