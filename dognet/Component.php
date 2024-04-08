@@ -155,7 +155,10 @@ class Component extends BaseComponent
 
         while ($recordset->getSize() == $request->getLimit()) {
             $request->sendNow();
-            $recordset = array_merge($recordset, $request->getGrid()->getRecordset());
+            //$recordset = array_merge($recordset, $request->getGrid()->getRecordset());
+            $newRecordset = $request->getGrid()->getRecordset();
+            $newRecordsArray = iterator_to_array($newRecordset);
+            $recordset = empty($recordset) ? $newRecordsArray : array_merge($recordset, $newRecordsArray);
         }
 
         $outputPath = $this->getDataDir() . '/out/tables/data.csv';
