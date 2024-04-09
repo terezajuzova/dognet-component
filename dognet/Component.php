@@ -136,7 +136,11 @@ class Component extends BaseComponent
         $request = new Pap_Api_TransactionsGrid($session);
 
         //$request->addFilter('dateinserted', Gpf_Data_Filter::DATERANGE_IS, Gpf_Data_Filter::RANGE_THIS_YEAR);
-        $request->addFilter("dateinserted", Gpf_Data_Filter::DATE_LOWER, "2050-01-01");
+        //$request->addFilter("dateinserted", Gpf_Data_Filter::DATE_LOWER, "2050-01-01");
+        
+        // Empty array
+        $allRecords = [];
+        
         $request->addParam('columns', new Gpf_Rpc_Array(array(array('id'),array('transid'),array('campaignid'), array('orderid'), array('commission'), array('original_currency_code'), array('dateinserted'),  array('userid'))));
         $request->setLimit(0, 100);
         $request->setSorting('orderid', false);
@@ -151,35 +155,31 @@ class Component extends BaseComponent
 
         $recordset = $request->getGrid()->getRecordset();
 
-        //The first grid request returns only a limited number of records, depends on setLimit() function. If you want to retrieve all records, see using the cycle in the code below:
-
-        /*while ($recordset->getSize() == $request->getLimit()) {
-            $request->sendNow();
-            $recordset = array_merge($recordset, $request->getGrid()->getRecordset());
-        }*/
+        // iterate through the records
+        foreach($recordset as $rec) {
+            // Add new records to the array
+            $allRecords[] = $rec;
+        }
 
         $totalRecords = $grid->getTotalCount();
         $maxRecords = $recordset->getSize();
         
-        // Inicializace pole pro ukládání záznamů
-        $allRecords = [];
-        
         if ($maxRecords > 0) {
             $cycles = ceil($totalRecords / $maxRecords);
             for ($i = 1; $i < $cycles; $i++) {
-                // Nastavení limitu pro dotaz
+                // Now get next 100 records
                 $request->setLimit(($i - 1) * $maxRecords, $maxRecords);
                 $request->sendNow();
-                
-                // Získání záznamů z odpovědi
                 $currentRecordset = $request->getGrid()->getRecordset();
                 
-                // Přidání načtených záznamů do pole
+                // Add new records to the array
                 foreach ($currentRecordset as $record) {
                     $allRecords[] = $record;
                 }
             }
         }
+
+        $this->getLogger()->info("Number of records in array: " . count($allRecords));
 
         $outputPath = $this->getDataDir() . '/out/tables/data.csv';
 
