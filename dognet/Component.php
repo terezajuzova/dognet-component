@@ -135,10 +135,8 @@ class Component extends BaseComponent
         // get recordset of list of transactions
         $request = new Pap_Api_TransactionsGrid($session);
 
-        //$request->addFilter('dateinserted', Gpf_Data_Filter::DATERANGE_IS, Gpf_Data_Filter::RANGE_LAST_YEAR);
+        $request->addFilter('dateinserted', Gpf_Data_Filter::DATERANGE_IS, Gpf_Data_Filter::RANGE_THIS_YEAR);
         //$request->addFilter("dateinserted", Gpf_Data_Filter::DATE_LOWER, "2019-01-01");
-        $request->addFilter('dateinserted', 'D>=', '2023-07-01');
-        $request->addFilter('dateinserted', 'D<=', '2024-01-01');
         
         // Empty array
         $allRecords = [];
