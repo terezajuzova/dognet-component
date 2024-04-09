@@ -142,7 +142,7 @@ class Component extends BaseComponent
         $allRecords = [];
         
         $request->addParam('columns', new Gpf_Rpc_Array(array(array('id'),array('transid'),array('campaignid'), array('orderid'), array('commission'), array('original_currency_code'), array('dateinserted'),  array('userid'))));
-        $request->setLimit(0, 100);
+        $request->setLimit(0, 500);
         $request->setSorting('orderid', false);
 
         try {
