@@ -119,7 +119,7 @@ class Component extends BaseComponent
         //----------------------------------------------
         // get recordset with list of affiliates
         $request = new Pap_Api_AffiliatesGrid($session);
-        $request->setLimit(0, 30);
+        $request->setLimit(0, 500);
 
         try {
             $request->sendNow();
@@ -135,7 +135,7 @@ class Component extends BaseComponent
         // get recordset of list of transactions
         $request = new Pap_Api_TransactionsGrid($session);
 
-        $request->addFilter('dateinserted', Gpf_Data_Filter::DATERANGE_IS, Gpf_Data_Filter::RANGE_LAST_YEAR);
+        //$request->addFilter('dateinserted', Gpf_Data_Filter::DATERANGE_IS, Gpf_Data_Filter::RANGE_LAST_YEAR);
         //$request->addFilter("dateinserted", Gpf_Data_Filter::DATE_LOWER, "2050-01-01");
         
         // Empty array
