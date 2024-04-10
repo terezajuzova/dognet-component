@@ -25,7 +25,11 @@ class MyConfigDefinition extends BaseConfigDefinition
                 ->end()
                 ->scalarNode('#password')
                     ->isRequired()
-                    ->cannotBeEmpty();
+                    ->cannotBeEmpty()
+                ->end()   
+                ->scalarNode('data_filter')
+                ->isRequired()
+                ->cannotBeEmpty(); 
         return $parametersNode;
     }
 }

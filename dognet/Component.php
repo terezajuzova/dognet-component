@@ -101,10 +101,12 @@ class Component extends BaseComponent
         $apiUrl = $this->getConfig()->getStringValue(['parameters', 'api_url']);
         $username = $this->getConfig()->getStringValue(['parameters', 'username']);
         $password = $this->getConfig()->getStringValue(['parameters', '#password']);
+        $dataFilter = $this->getConfig()->getStringValue(['parameters', 'data_filter']);
         
         $this->getLogger()->info("apiUrl: $apiUrl");
         $this->getLogger()->info("username: $username");
         $this->getLogger()->info("password: " . ((strlen($password) == 0) ? "Missing in config" : "Defined"));
+        $this->getLogger()->info("dataFilter: $dataFilter");
 
         $this->getLogger()->info("Opening Pap API session");
         
@@ -136,7 +138,7 @@ class Component extends BaseComponent
         $request = new Pap_Api_TransactionsGrid($session);
 
         // Filters
-        $request->addFilter('dateinserted', Gpf_Data_Filter::DATERANGE_IS, Gpf_Data_Filter::RANGE_LAST_7_DAYS);
+        $request->addFilter('dateinserted', Gpf_Data_Filter::DATERANGE_IS, Gpf_Data_Filter::$dataFilter);
         
         // Empty array
         $allRecords = [];

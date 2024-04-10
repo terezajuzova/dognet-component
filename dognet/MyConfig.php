@@ -22,4 +22,8 @@ class MyConfig extends BaseConfig
     {
         return $this->getStringValue(['#password']);
     }
+    public function getDataFilter(): string
+    {
+        return $this->getStringValue(['data_filter']);
+    }
 }
