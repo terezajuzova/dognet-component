@@ -121,8 +121,8 @@ class Component extends BaseComponent
 
         //----------------------------------------------
         // get recordset with list of affiliates
-        /*$request = new Pap_Api_AffiliatesGrid($session);
-        $request->setLimit(0, 500);
+        $request = new Pap_Api_AffiliatesGrid($session);
+        $request->setLimit(0, 100);
 
         try {
             $request->sendNow();
@@ -133,7 +133,6 @@ class Component extends BaseComponent
         $this->getLogger()->info("Retrieved list of affiliates");
 
         $grid = $request->getGrid();
-        */
 
         //----------------------------------------------
         // get recordset of list of transactions
@@ -156,7 +155,7 @@ class Component extends BaseComponent
         }
         $this->getLogger()->info("Retrieved list of transactions");
 
-        $grid = $request->getGrid();
+        //$grid = $request->getGrid();
         
         $recordset = $request->getGrid()->getRecordset();
 
