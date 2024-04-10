@@ -101,7 +101,8 @@ class Component extends BaseComponent
         $apiUrl = $this->getConfig()->getStringValue(['parameters', 'api_url']);
         $username = $this->getConfig()->getStringValue(['parameters', 'username']);
         $password = $this->getConfig()->getStringValue(['parameters', '#password']);
-        $dataFilter = 'Gpf_Data_Filter::' . $this->getConfig()->getStringValue(['parameters', 'data_filter']);
+        $dataFilter = $this->getConfig()->getStringValue(['parameters', 'data_filter']);
+        $dataFilterConstant = Gpf_Data_Filter::class . '::' . $dataFilter;
         
         $this->getLogger()->info("apiUrl: $apiUrl");
         $this->getLogger()->info("username: $username");
@@ -138,7 +139,7 @@ class Component extends BaseComponent
         $request = new Pap_Api_TransactionsGrid($session);
 
         // Filters
-        $request->addFilter('dateinserted', Gpf_Data_Filter::DATERANGE_IS, constant($dataFilter));
+        $request->addFilter('dateinserted', Gpf_Data_Filter::DATERANGE_IS, constant($dataFilterConstant));
         
         // Empty array
         $allRecords = [];
