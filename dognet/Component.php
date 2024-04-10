@@ -138,7 +138,7 @@ class Component extends BaseComponent
         $request = new Pap_Api_TransactionsGrid($session);
 
         // Filters
-        $request->addFilter('dateinserted', Gpf_Data_Filter::DATERANGE_IS, $dataFilter);
+        $request->addFilter('dateinserted', Gpf_Data_Filter::DATERANGE_IS, constant($dataFilter));
         
         // Empty array
         $allRecords = [];
