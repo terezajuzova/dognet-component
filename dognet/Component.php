@@ -121,7 +121,7 @@ class Component extends BaseComponent
 
         //----------------------------------------------
         // get recordset with list of affiliates
-        $request = new Pap_Api_AffiliatesGrid($session);
+        /*$request = new Pap_Api_AffiliatesGrid($session);
         $request->setLimit(0, 500);
 
         try {
@@ -133,19 +133,20 @@ class Component extends BaseComponent
         $this->getLogger()->info("Retrieved list of affiliates");
 
         $grid = $request->getGrid();
+        */
 
         //----------------------------------------------
         // get recordset of list of transactions
         $request = new Pap_Api_TransactionsGrid($session);
 
         // Filters
-        $request->addFilter('dateinserted', Gpf_Data_Filter::DATERANGE_IS, constant($dataFilterConstant));
+        $request->addFilter('dateinserted', Gpf_Data_Filter::DATERANGE_IS, constant($dataFilter));
         
         // Empty array
         $allRecords = [];
         
         $request->addParam('columns', new Gpf_Rpc_Array(array(array('id'), array('orderid'), array('commission'), array('dateinserted'))));
-        $request->setLimit(0, 500);
+        $request->setLimit(0, 100);
 
         try {
             $request->sendNow();
@@ -155,6 +156,8 @@ class Component extends BaseComponent
         }
         $this->getLogger()->info("Retrieved list of transactions");
 
+        $grid = $request->getGrid();
+        
         $recordset = $request->getGrid()->getRecordset();
 
         // iterate through the records
