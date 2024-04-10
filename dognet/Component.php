@@ -101,7 +101,6 @@ class Component extends BaseComponent
         $apiUrl = $this->getConfig()->getStringValue(['parameters', 'api_url']);
         $username = $this->getConfig()->getStringValue(['parameters', 'username']);
         $password = $this->getConfig()->getStringValue(['parameters', '#password']);
-        $dataFilter = $this->getConfig()->getStringValue(['parameters', 'data_filter']);
         $dataFilter = 'Gpf_Data_Filter::' . $this->getConfig()->getStringValue(['parameters', 'data_filter']);
         
         $this->getLogger()->info("apiUrl: $apiUrl");
