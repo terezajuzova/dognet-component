@@ -6,7 +6,6 @@ parameters:
         - '#Instantiated class [a-zA-Z0-9\\_]+ not found.#'
         - '#Access to constant [a-zA-Z0-9\\_]+ on an unknown class [a-zA-Z0-9\\_]+.#'
         - '#Caught class [a-zA-Z0-9\\_]+ not found.#'
-        - '#Class [a-zA-Z0-9\\_]+ not found.#'
     paths:
         - src
         - tests
