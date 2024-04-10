@@ -120,23 +120,6 @@ class Component extends BaseComponent
         $this->getLogger()->info("Session opened");
 
         //----------------------------------------------
-        // get recordset with list of affiliates
-        /*
-        $request = new Pap_Api_AffiliatesGrid($session);
-        $request->setLimit(0, 100);
-
-        try {
-            $request->sendNow();
-        } catch(Exception $e) {
-            $this->getLogger()->info("API call error: ".$e->getMessage());
-            die("API call error: ".$e->getMessage());
-        }
-        $this->getLogger()->info("Retrieved list of affiliates");
-
-        $grid = $request->getGrid();
-        */
-
-        //----------------------------------------------
         // get recordset of list of transactions
         $request = new Pap_Api_TransactionsGrid($session);
 
