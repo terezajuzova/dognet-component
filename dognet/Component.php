@@ -124,13 +124,15 @@ class Component extends BaseComponent
         $request = new Pap_Api_TransactionsGrid($session);
 
         // Filters
-        $request->addFilter('dateinserted', Gpf_Data_Filter::DATERANGE_IS, constant($dataFilterConstant));
+        #$request->addFilter('dateinserted', Gpf_Data_Filter::DATERANGE_IS, constant($dataFilterConstant));
+        $request->addFilter('dateinserted', 'D>=', '2018-01-01');
+        $request->addFilter('dateinserted', 'D<=', '2018-06-30');
         
         // Empty array
         $allRecords = [];
         
         $request->addParam('columns', new Gpf_Rpc_Array(array(array('id'), array('orderid'), array('commission'), array('networkfee'), array('dateinserted'))));
-        $request->setLimit(0, 100);
+        $request->setLimit(0, 500);
 
         try {
             $request->sendNow();
