@@ -129,7 +129,7 @@ class Component extends BaseComponent
         // Empty array
         $allRecords = [];
         
-        $request->addParam('columns', new Gpf_Rpc_Array(array(array('id'), array('orderid'), array('commission'), array('dateinserted'))));
+        $request->addParam('columns', new Gpf_Rpc_Array(array(array('id'), array('orderid'), array('commission'), array('networkfee'), array('dateinserted'))));
         $request->setLimit(0, 100);
 
         try {
@@ -179,7 +179,7 @@ class Component extends BaseComponent
             $file = fopen($outputPath, 'w') or die("Unable to open output file $outputPath for writing!");
 
             // Write csv header
-            fputcsv($file, array('order_id', 'commission', 'id', 'date_inserted'));
+            fputcsv($file, array('order_id', 'commission', 'id', 'date_inserted', 'network_fee'));
 
             // Iterate through the records and write them to CSV
             foreach ($allRecords as $rec) {
@@ -187,7 +187,8 @@ class Component extends BaseComponent
                     $rec->get('orderid'),
                     $rec->get('commission'),
                     $rec->get('id'),
-                    $rec->get('dateinserted')
+                    $rec->get('dateinserted'),
+                    $rec->get('networkfee')
                 );
 
                 // Write data to CSV
