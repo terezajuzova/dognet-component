@@ -125,8 +125,8 @@ class Component extends BaseComponent
 
         // Filters
         #$request->addFilter('dateinserted', Gpf_Data_Filter::DATERANGE_IS, constant($dataFilterConstant));
-        $request->addFilter('dateinserted', 'D>=', '2020-09-30');
-        $request->addFilter('dateinserted', 'D<=', '2020-12-31');
+        $request->addFilter('dateinserted', 'D>=', '2020-12-31');
+        $request->addFilter('dateinserted', 'D<=', '2021-03-31');
         
         // Empty array
         $allRecords = [];
