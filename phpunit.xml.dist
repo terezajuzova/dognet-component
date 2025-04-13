@@ -8,12 +8,6 @@
          processIsolation="false"
          stopOnFailure="false"
          bootstrap="tests/bootstrap.php">
-
-    <!-- 🔧 Přidáme nastavení pro potlačení deprecation warningů -->
-    <php>
-        <ini name="error_reporting" value="E_ALL & ~E_DEPRECATED" />
-    </php>
-
     <testsuite name="Tests">
         <directory>tests/</directory>
     </testsuite>
