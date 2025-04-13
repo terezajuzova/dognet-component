@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(E_ALL & ~E_DEPRECATED);
+
 declare(strict_types=1);
 
 use Keboola\Component\Logger;
