@@ -179,7 +179,7 @@ class Component extends BaseComponent
             $file = fopen($outputPath, 'w') or die("Unable to open output file $outputPath for writing!");
 
             // Write csv header
-            fputcsv($file, array('order_id', 'commission', 'id', 'date_inserted', 'network_fee'));
+            fputcsv($file, array('order_id', 'commission', 'id', 'date_inserted', 'network_fee'), ',', '"', '\\');
 
             // Iterate through the records and write them to CSV
             foreach ($allRecords as $rec) {
@@ -192,7 +192,7 @@ class Component extends BaseComponent
                 );
 
                 // Write data to CSV
-                fputcsv($file, $data);
+                fputcsv($file, $data, ',', '"', '\\');
             }
         } catch (Exception $e) {
             $this->getLogger()->info("Failed to write the output file: " . $e->getMessage());
